@@ -6,219 +6,427 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Lavdrim Saliu - Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <style>
-        /* General Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #f39c12;
+            --secondary: #2c3e50;
+            --dark: #1a1a1a;
+            --light: #ffffff;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             line-height: 1.6;
-            background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
-            color: #fff;
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
         }
 
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--dark);
+            z-index: 0;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+            background: transparent;
+        }
+
+        /* Rest of the CSS remains the same as in the previous version */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1rem 2rem;
             background: rgba(0, 0, 0, 0.8);
-            position: sticky;
+            position: fixed;
+            width: 100%;
             top: 0;
             z-index: 1000;
+            backdrop-filter: blur(10px);
         }
 
         header h1 {
             font-size: 1.8rem;
-            color: #f39c12;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        header nav ul {
+        nav ul {
             list-style: none;
             display: flex;
             gap: 1.5rem;
         }
 
-        header nav ul li a {
+        nav ul li a {
             text-decoration: none;
-            color: #fff;
+            color: var(--light);
             font-weight: 600;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        header nav ul li a:hover {
-            color: #f39c12;
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
         }
 
         .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            padding: 5rem 2rem;
-            background: url('https://source.unsplash.com/1600x900/?technology,computer') no-repeat center/cover;
-            color: #fff;
+            padding: 2rem;
+            position: relative;
+            background: rgba(0, 0, 0, 0.5);
         }
 
         .hero h2 {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease 0.2s forwards;
         }
 
-        .hero a {
+        .hero-btn {
             display: inline-block;
-            padding: 0.8rem 1.5rem;
-            background: #f39c12;
-            color: #fff;
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: var(--light);
             border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease 0.4s forwards;
         }
 
-        .hero a:hover {
-            background: #e67e22;
+        .hero-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
         }
 
         section {
-            padding: 4rem 2rem;
-            text-align: center;
+            padding: 6rem 2rem;
+            position: relative;
+            background: rgba(0, 0, 0, 0.5);
         }
 
         section h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: #f39c12;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            text-align: center;
         }
 
-        #skills .skills-grid {
-            display: flex;
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-            justify-content: center;
-            flex-wrap: wrap;
+            padding: 2rem;
         }
 
         .skill-card {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(255, 255, 255, 0.05);
             padding: 2rem;
-            border-radius: 10px;
-            text-align: center;
-            transition: transform 0.3s;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .skill-card:hover {
             transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .skill-card i {
             font-size: 3rem;
-            color: #f39c12;
+            color: var(--primary);
             margin-bottom: 1rem;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            display: flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--light);
+            border-radius: 30px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .contact-links a i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
         }
 
         footer {
             background: rgba(0, 0, 0, 0.8);
             text-align: center;
-            padding: 2rem 0;
-            color: #fff;
-            margin-top: 2rem;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 2;
         }
 
-        footer p {
-            font-size: 0.9rem;
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .contact-links a {
-            display: inline-block;
-            margin: 0.5rem;
-            padding: 0.8rem 1rem;
-            background: rgba(0, 0, 0, 0.7);
-            color: #fff;
-            border-radius: 30px;
-            text-decoration: none;
-            transition: background 0.3s;
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
         }
 
-        .contact-links a:hover {
-            background: #f39c12;
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .contact-links a i {
-            margin-right: 0.5rem;
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+                gap: 1rem;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
         }
+        
     </style>
 </head>
 <body>
-    <header>
-        <h1>Lavdrim Saliu</h1>
-        <nav>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div id="particles-js"></div>
+    <div class="content-wrapper">
+        <!-- Rest of the HTML remains the same as in the previous version -->
+        <header>
+            <h1>Lavdrim Saliu</h1>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
 
-    <div class="hero">
-        <h2>Welcome to My Portfolio</h2>
-        <p>Computer Engineering Student | Technology Enthusiast</p>
-        <a href="#about">Learn More</a>
+        <div class="hero">
+            <h2>Welcome to My Portfolio</h2>
+            <p>Computer Engineering Student | Technology Enthusiast</p>
+            <a href="#about" class="hero-btn">Learn More</a>
+        </div>
+
+        <section id="about" class="reveal">
+            <h2>About Me</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto;">
+                I am Lavdrim Saliu, a passionate Computer Engineering student at International Balkan University (2023 - Present). 
+                I specialize in building innovative web applications and love exploring new technologies to create impactful solutions.
+            </p>
+        </section>
+
+        <section id="skills" class="reveal">
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Programming</h3>
+                    <p>Python, Java, C++, C</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>Web Development</h3>
+                    <p>HTML, CSS, JavaScript</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-tools"></i>
+                    <h3>Tools</h3>
+                    <p>Git, IntelliJ IDEA, VSC, CLion</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="reveal">
+            <h2>Projects</h2>
+            <p style="text-align: center;">
+                Check out my <a href="https://github.com/lavdrimsaliu" target="_blank" style="color: var(--primary);">GitHub profile</a> for more projects!
+            </p>
+        </section>
+
+        <section id="contact" class="reveal">
+            <h2>Contact Me</h2>
+            <div class="contact-links">
+                <a href="mailto:lavdrimsaliuu2@gmail.com" title="Email">
+                    <i class="fas fa-envelope"></i>Email
+                </a>
+                <a href="https://www.linkedin.com/in/lavdrim-saliu-8741022b9/" target="_blank" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>LinkedIn
+                </a>
+                <a href="https://www.instagram.com/lavdrimsss" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>Instagram
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=100008265242322" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook"></i>Facebook
+                </a>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 Lavdrim Saliu. All rights reserved.</p>
+        </footer>
     </div>
 
-    <section id="about">
-        <h2>About Me</h2>
-        <p>I am Lavdrim Saliu, a passionate Computer Engineering student at International Balkan University (2023 - Present). I specialize in building innovative web applications and love exploring new technologies to create impactful solutions.</p>
-    </section>
+    <script>
+        // Initialize particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#f39c12'
+                },
+                shape: {
+                    type: 'circle'
+                },
+                opacity: {
+                    value: 0.5,
+                    random: false
+                },
+                size: {
+                    value: 3,
+                    random: true
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#f39c12',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'repulse'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
 
-    <section id="skills">
-        <h2>Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-card">
-                <i class="fas fa-code"></i>
-                <h3>Programming</h3>
-                <p>Python, Java, C++</p>
-            </div>
-            <div class="skill-card">
-                <i class="fas fa-laptop-code"></i>
-                <h3>Web Development</h3>
-                <p>HTML, CSS, JavaScript</p>
-            </div>
-            <div class="skill-card">
-                <i class="fas fa-tools"></i>
-                <h3>Tools</h3>
-                <p>Git, IntelliJ IDEA</p>
-            </div>
-        </div>
-    </section>
+        // Scroll reveal animation
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
 
-    <section id="projects">
-        <h2>Projects</h2>
-        <p>Check out my <a href="https://github.com/lavdrimsaliu" target="_blank">GitHub profile</a> for more projects!</p>
-    </section>
+        window.addEventListener('scroll', reveal);
+        reveal(); // Initial check
 
-    <section id="contact">
-        <h2>Contact Me</h2>
-        <div class="contact-links">
-            <a href="mailto:lavdrimsaliuu2@gmail.com" title="Email"><i class="fas fa-envelope"></i>Email</a>
-            <a href="https://www.linkedin.com/in/lavdrim-saliu-8741022b9/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i>LinkedIn</a>
-            <a href="https://www.instagram.com/lavdrimsss" target="_blank" title="Instagram"><i class="fab fa-instagram"></i>Instagram</a>
-            <a href="https://www.facebook.com/profile.php?id=100008265242322" target="_blank" title="Facebook"><i class="fab fa-facebook"></i>Facebook</a>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2025 Lavdrim Saliu. All rights reserved.</p>
-    </footer>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
