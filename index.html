@@ -257,6 +257,101 @@
                 font-size: 1.2rem;
             }
         }
+         /* Reduce motion for users who prefer it */
+         @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            .skill-card:hover {
+                transform: none;
+            }
+
+            .particles-js-canvas-el {
+                display: none;
+            }
+        }
+        @media (hover: none) {
+            .skill-card, 
+            .contact-links a,
+            nav ul li a {
+                cursor: pointer;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .skill-card:active,
+            .contact-links a:active {
+                transform: scale(0.98);
+            }
+        }
+        @media (max-width: 360px) {
+            header h1 {
+                font-size: 1.3rem;
+            }
+
+            nav ul {
+                gap: 0.5rem;
+            }
+
+            nav ul li a {
+                font-size: 0.8rem;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+        }
+         @media (max-width: 575px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            nav ul {
+                gap: 0.8rem;
+            }
+
+            nav ul li a {
+                font-size: 0.9rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+
+            .skill-card {
+                padding: 1.5rem;
+            }
+
+            .skill-card i {
+                font-size: 2.5rem;
+            }
+
+            footer {
+                padding: 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
         
     </style>
 </head>
